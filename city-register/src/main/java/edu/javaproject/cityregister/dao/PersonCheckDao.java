@@ -16,7 +16,14 @@ import java.sql.SQLException;
   */
 public class PersonCheckDao {
     // TODO: 22/10/2019 Write  SQL request
-    private static final String SQL_REQUEST = "";
+    private static final String SQL_REQUEST =
+            "SELECT temporal  FROM cr_address_person ap " +
+            "INNER JOIN cr_person p ON p.person_id = ap.person_id " +
+            "INNER JOIN cr_address a ON a.address_id = ap.address_id " +
+            "WHERE " +
+            "UPPER(p.sur_name) = UPPER(?) and UPPER(p.given_name) = UPPER(?) and UPPER(patronymic) = UPPER(?) " +
+            "  and p.date_of_birth = ? and a.street_code = ? " +
+            "  and UPPER(a.building) = UPPER(?) and UPPER(a.extension) = UPPER(?) and UPPER(a.apartment) = UPPER(?) ";
 
     /**
      * Get response on {@link PersonRequest} about Person
@@ -29,6 +36,8 @@ public class PersonCheckDao {
 
         try (Connection con = getConnection();
              PreparedStatement stmt = con.prepareStatement(SQL_REQUEST)){
+
+            // TODO: 23/10/2019 set stmt params
 
             ResultSet rs = stmt.executeQuery();
 
@@ -43,7 +52,6 @@ public class PersonCheckDao {
         return response;
     }
 
-    // TODO: 22/10/2019  fix return
     private Connection getConnection() throws SQLException {
         return ConnectionBuilder.getConnection();
     }

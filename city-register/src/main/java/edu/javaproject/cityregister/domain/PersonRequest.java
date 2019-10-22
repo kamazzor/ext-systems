@@ -3,7 +3,7 @@ package edu.javaproject.cityregister.domain;
 import java.time.LocalDate;
 
 /***
- * That domain class request data about Person from cr_register database (GRN)
+ * That domain class request data about Person from city_register database (GRN)
  */
 public class PersonRequest {
     private String surName;
