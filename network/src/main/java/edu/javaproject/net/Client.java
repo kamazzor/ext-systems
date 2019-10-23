@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
  */
 public class Client {
     public static void main(String[] args) throws IOException {
-        for (int i = 0; i < 500; i++) {
-            SimpleClient sc = new SimpleClient();
+        for (int i = 0; i < 8; i++) {
+            SimpleClient sc = new SimpleClient(i);
             sc.start();
         }
     }
@@ -18,16 +18,28 @@ public class Client {
 }
 
 class SimpleClient extends Thread {
+
+    public static final String[] COMMAND = {
+            "HELLO", "MORNING", "DAY", "EVENING"
+    };
+
+    private int cmdNumber;
+
+    public SimpleClient(int cmdNumber){
+        this.cmdNumber = cmdNumber;
+    }
     @Override
     public void run() {
         try {
-            System.out.println("Started: " + LocalDateTime.now());
+//            System.out.println("Started: " + LocalDateTime.now());
             Socket client = new Socket("127.0.0.1", 25225);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
 
-            bw.write("Mikhail");
+            String command = COMMAND[cmdNumber % COMMAND.length];
+            String username = "Mikhail";
+            bw.write(command + " " + username);
             bw.newLine();
             bw.flush();
 
@@ -38,7 +50,7 @@ class SimpleClient extends Thread {
             bw.close();
 
             client.close();
-            System.out.println("Finished: " + LocalDateTime.now());
+//            System.out.println("Finished: " + LocalDateTime.now());
         } catch (IOException e){
             e.printStackTrace(System.out);
         }

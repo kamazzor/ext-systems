@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /***
- * Create Server class to receive and process outer requests
+ * That Server class receive and process outer requests
  */
 public class Server {
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -41,22 +41,35 @@ class SimpleServer extends Thread {
             BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
 
-            StringBuilder sb = new StringBuilder("Hello, ");
-            String username = br.readLine();
-            System.out.println("Server got string: " + username);
-            Thread.sleep(2000);
+            String request = br.readLine();
+            String[] strings = request.split("\\s+");
+            String command = strings[0];
+            String username = strings[1];
+            System.out.println("Server got command: " + command);
+            System.out.println("Server got username: " + username);
+//            Thread.sleep(2000);
 
-            sb.append(username);
-            bw.write(sb.toString());
-            bw.newLine();               //пустая строчка
+            String response = buildResponse(command, username);
+            bw.write(response);
+            bw.newLine();               //пустая строка
             bw.flush();
 
             br.close();
             bw.close();
-
             client.close();
+
         } catch (Exception e){
             e.printStackTrace(System.out);
+        }
+    }
+
+    private String buildResponse(String command, String userName){
+        switch (command) {
+            case "HELLO" : return "Hello " + userName;
+            case "MORNING" : return "Good morning " + userName;
+            case "DAY" : return "Good day " + userName;
+            case "EVENING" : return "Good evening " + userName;
+            default: return "Bad command. Try once again";
         }
     }
 }
