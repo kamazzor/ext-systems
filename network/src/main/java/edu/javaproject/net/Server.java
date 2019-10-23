@@ -1,34 +1,75 @@
 package edu.javaproject.net;
 
 import java.io.*;
+import java.lang.reflect.Constructor;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 /***
  * That Server class receive and process outer requests
  */
 public class Server {
     public static void main(String[] args) throws IOException, InterruptedException {
+
         ServerSocket server = new ServerSocket(25225, 1000);
         System.out.println("Server is started");
+
+        // Map with command name <-> handler class association
+        Map<String, Greetable> handlers = loadHandlers();
 
         //Start listen port of socket while you need
         while (true){
             Socket client = server.accept();
-            new SimpleServer(client).start();
+            new SimpleServer(client, handlers).start();
         }
 
 
     }
-    //Method handling requests received by server socket on port 25225
+
+    /**
+     * Method create map with "command name -> handler class" association
+     * using reflection to create entities of handler classes by its full name
+     */
+    private static Map<String, Greetable> loadHandlers() {
+        Map<String, Greetable> result = new HashMap<>();
+
+        try (InputStream is = Server.class.getClassLoader()
+                .getResourceAsStream("server.properties")){
+
+            Properties properties = new Properties();
+            properties.load(is);
+
+            //Get full name of handler class by associated map key
+            for (Object command : properties.keySet()) {
+                String className = properties.getProperty(command.toString());
+                //Get link on class realizzation
+                Class<Greetable> cl = (Class<Greetable>) Class.forName(className);
+                //Get class entity
+                Greetable handler = cl.getConstructor().newInstance();
+                result.put(command.toString(), handler);
+
+            }
+
+        } catch (Exception e){
+            e.printStackTrace(System.out);
+        }
+
+
+        return result;
+    }
 }
 
 class SimpleServer extends Thread {
 
     private Socket client = new Socket();
+    private Map<String, Greetable> handlers;
 
-    SimpleServer(Socket client){
+    SimpleServer(Socket client, Map<String, Greetable> handlers){
         this.client = client;
+        this.handlers = handlers;
     }
 
     @Override
@@ -42,7 +83,7 @@ class SimpleServer extends Thread {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
 
             String request = br.readLine();
-            String[] strings = request.split("\\s+");
+            String[] strings = request.trim().split("\\s+");
             String command = strings[0];
             String username = strings[1];
             System.out.println("Server got command: " + command);
@@ -64,12 +105,10 @@ class SimpleServer extends Thread {
     }
 
     private String buildResponse(String command, String userName){
-        switch (command) {
-            case "HELLO" : return "Hello " + userName;
-            case "MORNING" : return "Good morning " + userName;
-            case "DAY" : return "Good day " + userName;
-            case "EVENING" : return "Good evening " + userName;
-            default: return "Bad command. Try once again";
+        Greetable handler = handlers.get(command);
+        if (handler != null){
+            return handler.buildResponse(userName);
         }
+        return "Bad command. Please, try again";
     }
 }

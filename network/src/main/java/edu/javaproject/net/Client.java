@@ -39,7 +39,7 @@ class SimpleClient extends Thread {
 
             String command = COMMAND[cmdNumber % COMMAND.length];
             String username = "Mikhail";
-            bw.write(command + " " + username);
+            bw.write(" " + command + " " + username);
             bw.newLine();
             bw.flush();
 
