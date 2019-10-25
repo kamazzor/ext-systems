@@ -1,6 +1,7 @@
 package edu.javaproject.cityregister.web;
 
 import edu.javaproject.cityregister.dao.PersonCheckDao;
+import edu.javaproject.cityregister.dao.PoolConnectionBuilder;
 import edu.javaproject.cityregister.domain.PersonRequest;
 import edu.javaproject.cityregister.domain.PersonResponse;
 import edu.javaproject.cityregister.exception.PersonCheckException;
@@ -26,6 +27,7 @@ public class CheckPersonServlet extends HttpServlet {
     public void init() throws ServletException {
         logger.info("Servlet is created");
         dao = new PersonCheckDao();
+        dao.setConnectionBuilder(new PoolConnectionBuilder());
     }
 
     @Override

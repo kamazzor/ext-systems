@@ -27,6 +27,17 @@ public class PersonCheckDao {
 //            "  and UPPER(a.extension) = UPPER(?) " +
 //            "  and UPPER(a.apartment) = UPPER(?) ";
 
+
+    private ConnectionBuilder connectionBuilder;
+
+    public void setConnectionBuilder(ConnectionBuilder connectionBuilder) {
+        this.connectionBuilder = connectionBuilder;
+    }
+    //Get connection with DB using ConncectionBuilder interface
+    private Connection getConnection() throws SQLException, ClassNotFoundException {
+        return connectionBuilder.getConnection();
+    }
+
     /**
      * Get response on {@link PersonRequest} about Person from cr_register database (GRN)
      * @param request Data to get request about Person in GRN (city_register DB).
@@ -81,9 +92,5 @@ public class PersonCheckDao {
         }
 
         return response;
-    }
-
-    private Connection getConnection() throws SQLException, ClassNotFoundException {
-        return ConnectionBuilder.getConnection();
     }
 }

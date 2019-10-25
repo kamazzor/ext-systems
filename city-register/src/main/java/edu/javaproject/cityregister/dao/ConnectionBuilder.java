@@ -7,15 +7,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /***
- * Database connection builder. Database config is specified in dao.properties
+ * That class build database connection (PostgreSQL).
  */
-public class ConnectionBuilder {
-    public static Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("org.postgresql.Driver");
-        Connection con = DriverManager.getConnection(
-                Config.getProperty(Config.DB_URL),
-                Config.getProperty(Config.DB_LOGIN),
-                Config.getProperty(Config.DB_PASSWORD));
-        return con;
-    }
+public interface ConnectionBuilder {
+    public Connection getConnection() throws SQLException, ClassNotFoundException;
 }

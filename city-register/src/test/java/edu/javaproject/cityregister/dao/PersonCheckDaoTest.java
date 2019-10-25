@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
+/***
+ * That is Unit-tests class for {@link PersonCheckDao} class
+ */
 public class PersonCheckDaoTest {
 
     @Test
@@ -26,6 +29,7 @@ public class PersonCheckDaoTest {
 
         //Create example of PersonResponse to PersonRequest
         PersonCheckDao dao = new PersonCheckDao();
+        dao.setConnectionBuilder(new DirectConnectionBuilder());
         PersonResponse pRes = dao.checkPerson(pReq);
         Assert.assertFalse(pRes.isTemporal());
 
@@ -46,6 +50,7 @@ public class PersonCheckDaoTest {
 
         //Create example of PersonResponse to PersonRequest
         PersonCheckDao dao = new PersonCheckDao();
+        dao.setConnectionBuilder(new DirectConnectionBuilder());
         PersonResponse pResp = dao.checkPerson(pReq);
         Assert.assertFalse(pResp.isTemporal());
 
