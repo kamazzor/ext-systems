@@ -11,6 +11,7 @@
 
     <properties>
         <slf4j.version>1.7.28</slf4j.version>
+        <jersey.version>2.28</jersey.version>
     </properties>
 
     <build>
@@ -60,6 +61,22 @@
             <artifactId>slf4j-jdk14</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet-core -->
+        <!-- Library can separate HTTP-request by logic parts-->
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+
+        <!-- Library can do injections for HTTP-classes annotation-->
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.postgresql</groupId>
