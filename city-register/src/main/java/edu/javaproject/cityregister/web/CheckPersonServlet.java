@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @WebServlet(name = "CheckPersonServlet", urlPatterns = {"/checkPerson"})
 public class CheckPersonServlet extends HttpServlet {
@@ -34,18 +35,18 @@ public class CheckPersonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
 
-        //Get value from "surname" browser field
-        String surname = req.getParameter("surname");
-
+        //Get PersonRequest values from browser fields inputed by Person
         PersonRequest pReq = new PersonRequest();
-        pReq.setSurName(surname);
-        pReq.setGivenName("Павел");
-        pReq.setPatronymic("Николаевич");
-        pReq.setDateOfBirth(LocalDate.of(1995, 3, 18));
-        pReq.setStreetCode(1);
-        pReq.setBuilding("10");
-        pReq.setExtension("2");
-        pReq.setApartment("121");
+        pReq.setSurName(req.getParameter("surName"));
+        pReq.setGivenName(req.getParameter("givenName"));
+        pReq.setPatronymic(req.getParameter("patronymic"));
+        LocalDate dateOfbirth = LocalDate.parse(req.getParameter("dateOfBirth"),
+                                                DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        pReq.setDateOfBirth(dateOfbirth);
+        pReq.setStreetCode(Integer.parseInt(req.getParameter("streetCode")));
+        pReq.setBuilding(req.getParameter("building"));
+        pReq.setExtension(req.getParameter("extension"));
+        pReq.setApartment(req.getParameter("apartment"));
 
         try {
             PersonResponse pResp = dao.checkPerson(pReq);
