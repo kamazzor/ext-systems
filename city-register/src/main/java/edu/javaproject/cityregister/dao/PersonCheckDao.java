@@ -12,7 +12,6 @@ import java.sql.*;
  * (tables: cr_address, cr_address_person, cr_district, cr_person, cr_street)
   */
 public class PersonCheckDao {
-    // TODO: 22/10/2019 Write  SQL request
     private static final String SQL_REQUEST =
             "SELECT temporal  FROM cr_address_person ap " +
             "INNER JOIN cr_person p ON p.person_id = ap.person_id " +
@@ -77,14 +76,14 @@ public class PersonCheckDao {
                 response.setRegistered(true);
                 response.setTemporal(rs.getBoolean("temporal"));
             }
-        } catch (SQLException e){
+        } catch (SQLException | ClassNotFoundException e){
             throw new PersonCheckException(e);
         }
 
         return response;
     }
 
-    private Connection getConnection() throws SQLException {
+    private Connection getConnection() throws SQLException, ClassNotFoundException {
         return ConnectionBuilder.getConnection();
     }
 }

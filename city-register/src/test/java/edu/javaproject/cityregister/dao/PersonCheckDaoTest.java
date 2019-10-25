@@ -46,8 +46,8 @@ public class PersonCheckDaoTest {
 
         //Create example of PersonResponse to PersonRequest
         PersonCheckDao dao = new PersonCheckDao();
-        PersonResponse pRes = dao.checkPerson(pReq);
-        Assert.assertFalse(pRes.isTemporal());
+        PersonResponse pResp = dao.checkPerson(pReq);
+        Assert.assertFalse(pResp.isTemporal());
 
     }
 }

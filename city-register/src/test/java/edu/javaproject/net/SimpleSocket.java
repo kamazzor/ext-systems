@@ -15,7 +15,7 @@ public class SimpleSocket {
         InputStream is = socket.getInputStream();
         OutputStream os = socket.getOutputStream();
         //Command to get connection with other program
-        String command = "GET / HTTP/1.1\r\nHost:localohost\r\n\r\n";
+        String command = "GET / HTTP/1.1\r\nHost:localhost\r\n\r\n";
         os.write(command.getBytes());
         os.flush();
 
