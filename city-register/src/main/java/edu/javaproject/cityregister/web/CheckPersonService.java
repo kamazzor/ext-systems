@@ -1,13 +1,21 @@
 package edu.javaproject.cityregister.web;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import edu.javaproject.cityregister.domain.PersonResponse;
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+
+/***
+ * That class realize HTTP method using  Jersey Servlet (JAX-RS realization)
+ */
 @Path("/check")
 public class CheckPersonService {
+
     @GET
-    public String checkPerson(){
-        // TODO: 10/26/2019 fix return
-        return "Simple string";
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public PersonResponse checkPerson(@PathParam("id") int simpleId,
+                                       @QueryParam("name") String simpleName){
+        return new PersonResponse();
     }
 }
