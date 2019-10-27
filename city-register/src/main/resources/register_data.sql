@@ -22,6 +22,6 @@ VALUES
 INSERT INTO cr_address_person (address_id, person_id, start_date, end_date)
 VALUES
 (1, 1, '2014-10-12', null),
-(2, 2, '2014-10-12', null),
+(1, 2, '2014-10-12', null),
 (1, 3, '2016-02-05', null),
 (1, 4, '2018-12-11', null);

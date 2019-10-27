@@ -54,7 +54,6 @@ public class PersonCheckDao {
         } else{
             sql.append(" and a.extension is null ");
         }
-
         if (request.getApartment() != null) {
             sql.append(" and UPPER(a.apartment) = UPPER(?) ");
         } else{

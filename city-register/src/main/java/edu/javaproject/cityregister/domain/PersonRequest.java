@@ -7,6 +7,7 @@ import java.time.LocalDate;
  * That domain class request data about Person from city_register database (GRN)
  */
 public class PersonRequest {
+
     private String surName;
     private String givenName;
     private String patronymic;

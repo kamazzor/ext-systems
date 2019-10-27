@@ -33,11 +33,6 @@ public class CheckPersonService {
         dao.setConnectionBuilder(new PoolConnectionBuilder());
     }
 
-//    @GET
-//    public String testGetOutput(){
-//        return "Answer on GET";
-//    }
-
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

@@ -45,13 +45,15 @@ public class PersonCheckDaoTest {
         pReq.setPatronymic("Петровна");
         pReq.setDateOfBirth(LocalDate.of(1997, 8, 21));
         pReq.setStreetCode(1);
-        pReq.setBuilding("271");
-        pReq.setApartment("4");
+        pReq.setBuilding("10");
+        pReq.setExtension("2");
+        pReq.setApartment("121");
 
         //Create example of PersonResponse to PersonRequest
         PersonCheckDao dao = new PersonCheckDao();
         dao.setConnectionBuilder(new DirectConnectionBuilder());
         PersonResponse pResp = dao.checkPerson(pReq);
+        Assert.assertTrue(pResp.isRegistered());
         Assert.assertFalse(pResp.isTemporal());
 
     }
