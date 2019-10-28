@@ -2,8 +2,11 @@ package edu.javacourse.register.domain;
 
 import javax.persistence.*;
 
+/***
+ * That class mapping it's data on person table from register_office DB
+ */
 @Entity
-@Table
+@Table(name = "person")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,5 +39,14 @@ public class Person {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "personId=" + personId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }
