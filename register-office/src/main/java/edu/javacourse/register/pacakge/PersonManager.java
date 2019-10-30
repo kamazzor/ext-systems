@@ -8,6 +8,9 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 /***
@@ -16,6 +19,42 @@ import java.util.List;
 public class PersonManager {
 
     public static void main(String[] args) {
+        sessionExample();
+
+        jpaExample();
+    }
+
+    /**
+     * Work with Config DB and external classes using Hibernate realization of JPA spec
+     */
+    private static void jpaExample() {
+        EntityManagerFactory emf = buildEntityManagerFactory();
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+
+        Person p = new Person();
+        p.setFirstName("Алексей");
+        p.setLastName("Федоров");
+
+        em.persist(p);
+        System.out.println(p.getPersonId());
+
+        em.getTransaction().commit();
+        em.close();
+
+        em = emf.createEntityManager();
+        List personsFromDB = em.createQuery("FROM Person").getResultList();
+        personsFromDB.forEach(System.out::println);
+
+        em.close();
+
+    }
+
+    /**
+     * Work with Config DB and external classes using Hibernate realization
+     */
+    private static void sessionExample() {
         SessionFactory sessionFactory = buildSessionFactory();
 
         System.out.println();
@@ -39,7 +78,7 @@ public class PersonManager {
         session.getTransaction().commit();
         session.close();
 
-        //Get added person with "id" identificator from "person" table of city_register DB
+        //Get added person with "id" identifier from "person" table of city_register DB
         session = sessionFactory.openSession();
         Person personFromDB = session.get(Person.class, id);
         System.out.println(personFromDB);
@@ -51,6 +90,21 @@ public class PersonManager {
         session.close();
     }
 
+    private static EntityManagerFactory buildEntityManagerFactory() {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence");
+
+            return emf;
+        } catch (Throwable ex) {
+            System.err.println("Initial EntityManagerFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    /**
+     * Build Hibernate SessionFactory to get sessions to modify data from DB.
+     * @return
+     */
     private static SessionFactory buildSessionFactory() {
         try {
             StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
