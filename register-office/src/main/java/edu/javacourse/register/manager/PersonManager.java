@@ -1,4 +1,4 @@
-package edu.javacourse.register.pacakge;
+package edu.javacourse.register.manager;
 
 import edu.javacourse.register.domain.Person;
 import org.hibernate.Session;
