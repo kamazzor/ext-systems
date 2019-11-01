@@ -10,6 +10,8 @@ import edu.javacourse.register.view.MarriageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 /***
@@ -17,7 +19,8 @@ import org.springframework.stereotype.Service;
  * process them
  */
 
-@Service(value = "manager")
+@Service(value = "marriageService")
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class MarriageManager {
     public static final Logger logger = LoggerFactory.getLogger(MarriageManager.class);
 
@@ -26,17 +29,9 @@ public class MarriageManager {
     //Necessary dao objects for that Manager
     @Autowired
     private  MarriageDao marriageDao;
+    @Autowired
     private PersonDao personDao;
 
-//    @Autowired
-    public MarriageManager(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    @Autowired
-    public MarriageManager(MarriageDao marriageDao) {
-        this.marriageDao = marriageDao;
-    }
 
     @Autowired
     private void setMarriageDao(MarriageDao marriageDao){
@@ -51,6 +46,8 @@ public class MarriageManager {
     public MarriageResponse findMarriageCertificate(MarriageRequest request){
         logger.info("findMarriageCertificate called");
         MarriageCertificate certificate = marriageDao.findMarriageCertificate(request);
+
+        personDao.findPersons();
         // TODO: 11/1/2019  Return normal MarriageResponse based on founded marriage certificate
         return new MarriageResponse();
     }
