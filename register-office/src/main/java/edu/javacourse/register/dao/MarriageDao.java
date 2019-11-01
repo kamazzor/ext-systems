@@ -11,9 +11,14 @@ public class MarriageDao {
     public static final Logger logger = LoggerFactory.getLogger(MarriageDao.class);
 
     private EntityManager entityManager;
+    private String test;
+
+    public void setTest(String test) {
+        this.test = test;
+    }
 
     public MarriageCertificate findMarriageCertificate(MarriageRequest request){
-        logger.info("findMarriageCertificate called");
+        logger.info("findMarriageCertificate called: {}", test);
 
         // TODO: 11/1/2019 Fix return
         return null;
