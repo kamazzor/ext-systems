@@ -20,17 +20,17 @@ public class PersonDaoTest {
             System.out.println("Class for sex: " + person.getClass().getName());
             System.out.println("Passports: " + person.getPassports().size());
             System.out.println("Person birth certificate: " + person.getBirthCertificate());
-            if (person instanceof PersonMale) {
-                System.out.println("PersonMale (as Father) linked birth certificates size: " +
-                        ((PersonMale) person).getBirthCertificates().size());
-                System.out.println("PersonMale (as Father) linked marriage certificates size: " +
-                        ((PersonMale) person).getMarriageCertificates().size());
-            } else {
-                System.out.println("PersonFemale (as Mother) linked birth certificates size: " +
-                        ((PersonFemale) person).getBirthCertificates().size());
-                System.out.println("PersonFemale (as Mother) linked marriage certificates size: " +
-                        ((PersonFemale) person).getMarriageCertificates().size());
-            }
+//            if (person instanceof PersonMale) {
+//                System.out.println("PersonMale (as Father) linked birth certificates size: " +
+//                        ((PersonMale) person).getBirthCertificates().size());
+//                System.out.println("PersonMale (as Father) linked marriage certificates size: " +
+//                        ((PersonMale) person).getMarriageCertificates().size());
+//            } else {
+//                System.out.println("PersonFemale (as Mother) linked birth certificates size: " +
+//                        ((PersonFemale) person).getBirthCertificates().size());
+//                System.out.println("PersonFemale (as Mother) linked marriage certificates size: " +
+//                        ((PersonFemale) person).getMarriageCertificates().size());
+//            }
         });
     }
 }
