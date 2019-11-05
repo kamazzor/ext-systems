@@ -1,2 +1,2 @@
 # ext-systems
-Try to do client-server communication
+This is the web part of newStudentProject (https://github.com/kamazzor/newStudentProject)
