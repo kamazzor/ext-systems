@@ -14,9 +14,22 @@ public class PersonDao {
 //        entityManager = factory.createEntityManager();
 //    }
 
+    /***
+     * Find {@link Person} in  register_office DB using Person.findPersons named query.
+     * @return
+     */
     public List<Person> findPersons(){
         Query query = entityManager.createNamedQuery("Person.findPersons");
         query.setParameter("personId", 1L);
         return query.getResultList();
+    }
+
+    public Long addPerson(Person person){
+
+        entityManager.persist(person);
+        //force person persist to DB immediately
+        entityManager.flush();
+//        entityManager.detach(person);
+        return person.getPersonId();
     }
 }

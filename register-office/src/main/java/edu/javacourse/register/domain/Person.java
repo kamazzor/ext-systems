@@ -18,7 +18,7 @@ import java.util.List;
         @NamedQuery(name = "Person.findPersonsWithoutForceFetch",
         query = "SELECT p FROM Person p ")
 })
-public class Person {
+public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")

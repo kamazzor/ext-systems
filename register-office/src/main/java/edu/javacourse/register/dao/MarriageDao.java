@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 
+/***
+ * That class contains methods to work with register_office DB
+ */
 @Component
 public class MarriageDao {
     public static final Logger logger = LoggerFactory.getLogger(MarriageDao.class);
